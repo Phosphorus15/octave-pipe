@@ -33,7 +33,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a style="font-family: monospace" class="navbar-brand" href="#">
+                <a style="font-family: Fira Code, monospace, Consolas ,Monospaced" class="navbar-brand" href="#">
                     <span class="glyphicon glyphicon-certificate" aria-hidden="true"> </span>
                     Octave-Pipe
                 </a>
@@ -41,7 +41,7 @@
         </div>
     </nav>
     <div id="editor"></div>
-    <hr />
+    <hr />~
     <div class="btn-group" role="group" aria-label="...">
         <button type="button" class="btn btn-default" onclick="doRun(this)">Run</button>
         <button type="button" class="btn btn-default" onclick="clearText()">Clear</button>
@@ -68,7 +68,7 @@
         editor.setValue('disp("Welcome use octave-pipe");\nver\n');
         var editorObject = document.getElementById('editor');
         editorObject.style.fontSize = '16px';
-        editorObject.style.fontFamily = 'Fira Code; Monospaced; Consolas';
+        editorObject.style.fontFamily = 'Fira Code, monospace, Consolas ,Monospaced';
         window.savedEditor = editor;
     </script>
 </body>

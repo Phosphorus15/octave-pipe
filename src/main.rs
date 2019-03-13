@@ -84,16 +84,16 @@ fn handle(stream: TcpStream) -> Result<(), std::string::FromUtf8Error> {
         println!("request specific from {:?}:\n {}", addr, request);
         let resource = String::from_utf8(request.resource.0.clone()).unwrap();
         println!("request resource : {}", resource);
-        match(resource.as_str()) {
+        match resource.as_str() {
             "/favicon.ico" => {
-                stream.write("HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n".as_bytes());
+                stream.write("HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n".as_bytes()).expect(&format!("http write failed {:?}", addr));
             },
             "/code.sub" => {
-                handleSubmit(stream, request);
+                handle_submit(stream, request).expect(&format!("response failed {:?}", addr));
             },
             _ => {
-                stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n".as_bytes());
-                stream.write(grap_primary_page().as_bytes());
+                stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n".as_bytes()).expect(&format!("http write failed {:?}", addr));
+                stream.write(grap_primary_page().as_bytes()).expect(&format!("http write failed {:?}", addr));
             }
         }
     } else {
@@ -103,7 +103,7 @@ fn handle(stream: TcpStream) -> Result<(), std::string::FromUtf8Error> {
 }
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:8080");
+    let listener = TcpListener::bind("0.0.0.0:8080");
     if listener.is_err() {
 	eprintln!("error bind");
         return;
@@ -111,7 +111,7 @@ fn main() {
     for stream in listener.unwrap().incoming() {
         if stream.is_ok() {
             let _new_thread = thread::spawn(move || {
-                handle(stream.unwrap());
+                handle(stream.unwrap()).expect("thread abort unexpectedly");
             });
         }
     }
