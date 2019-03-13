@@ -1,7 +1,8 @@
 use std::process::*;
 
 fn submit_octave(code: String) -> (String, String) {
-    let process = match Command::new("/usr/bin/octave").arg("-q").arg("--eval")
+    // docker run -it jacobhayes/octave -q --eval "ver"
+    let process = match Command::new("docker").arg("run").arg("-it").arg("jacobhayes/octave").arg("-q").arg("--eval")
                                 .arg(format!("{}", code))
                                 .stdout(Stdio::piped()).stderr(Stdio::piped())
                                 .spawn() {
