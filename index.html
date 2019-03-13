@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <title>Octave Pipe</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function clearText() {
+            window.savedEditor.setValue('');
+        }
+
+        function doRun(button) {
+            button.disabled = "true";
+            $.ajax({
+                url: "code.sub", timeout: 3000, contentType: "text/plain", dataType: "text", type: "POST", data: window.savedEditor.getValue(), success: function (resp) {
+                    var resultObject = document.getElementById('result-panel');
+                    var resultContent = document.getElementById('panel-body-content');
+                    resultContent.innerText = resp;
+                    resultObject.hidden = false;
+                    button.disabled = false;
+                }, error: function () {
+                    button.disabled = false;
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a style="font-family: monospace" class="navbar-brand" href="#">
+                    <span class="glyphicon glyphicon-certificate" aria-hidden="true"> </span>
+                    Octave-Pipe
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div id="editor"></div>
+    <hr />
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default" onclick="doRun(this)">Run</button>
+        <button type="button" class="btn btn-default" onclick="clearText()">Clear</button>
+    </div>
+    <hr />
+    <div class="panel panel-info" id="result-panel" hidden="true">
+        <div class="panel-heading">
+            <h3 class="panel-title">Stdout</h3>
+        </div>
+        <div class="panel-body" id="panel-body-content">
+            N/A
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/ace/1.4.3/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor", {
+            theme: "ace/theme/tomorrow_night_eighties",
+            mode: "ace/mode/matlab",
+            autoScrollEditorIntoView: true,
+            maxLines: 360,
+            minLines: 16
+        });
+        editor.setValue('disp("Welcome use octave-pipe");\nver\n');
+        var editorObject = document.getElementById('editor');
+        editorObject.style.fontSize = '16px';
+        editorObject.style.fontFamily = 'Fira Code; Monospaced; Consolas';
+        window.savedEditor = editor;
+    </script>
+</body>
+
+</html>

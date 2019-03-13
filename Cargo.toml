@@ -1,0 +1,6 @@
+[package]
+name = "octave-pipe"
+version = "0.1.0"
+authors = ["phosphorus15"]
+
+[dependencies]
