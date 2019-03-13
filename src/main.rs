@@ -103,11 +103,13 @@ fn handle(stream: TcpStream) -> Result<(), std::string::FromUtf8Error> {
 }
 
 fn main() {
+    println!("Octave-pipe started");
     let listener = TcpListener::bind("0.0.0.0:8080");
     if listener.is_err() {
-	eprintln!("error bind");
+	    eprintln!("error bind");
         return;
     }
+    println!("Bind on localhost:8080");
     for stream in listener.unwrap().incoming() {
         if stream.is_ok() {
             let _new_thread = thread::spawn(move || {
