@@ -34,50 +34,54 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a style="font-family: Fira Code, monospace, Consolas ,Monospaced" class="navbar-brand" href="#">
+                <a href="https://github.com/Phosphorus15/octave-pipe" style="font-family: Fira Code, monospace, Consolas ,Monospaced"
+                    class="navbar-brand">
                     <span class="glyphicon glyphicon-certificate" aria-hidden="true"> </span>
-                    Octave-Pipe
+                    Octave-Online
                 </a>
             </div>
-            <a href="https://github.com/Phosphorus15/octave-pipe">
-            <p style="font-family: Fira Code, monospace, Consolas ,Monospaced" class="navbar-text navbar-right">View on
-                GitHub
-                <span class="glyphicon glyphicon-tags" aria-hidden="true"> </span>
-            </p>
-            </a>
         </div>
     </nav>
-    <div id="editor"></div>
+    <div class="well">
+        <div id="editor"></div>
+    </div>
     <hr />~
     <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default" onclick="doRun(this)">Run</button>
-        <button type="button" class="btn btn-default" onclick="clearText()">Clear</button>
+        <button type="button" class="btn btn-default" onclick="doRun(this)">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"> </span>  Run</button>
+        <button type="button" class="btn btn-default" onclick="clearText()">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>  Clear</button>
     </div>
     <hr />
-    <div class="panel panel-info" id="result-panel" hidden="true">
+    <div class="panel panel-info" id="result-panel">
         <div class="panel-heading">
-            <h3 class="panel-title">Stdout</h3>
+            <h3 class="panel-title">[STDOUT]</h3>
         </div>
-        <div class="panel-body" id="panel-body-content">
-            N/A
+        <div class="panel-body" id="panel-body-content" style="font-family: Fira Code, monospace, Consolas ,Monospaced">
+            No output for now
         </div>
     </div>
 
     <script src="https://cdn.bootcss.com/ace/1.4.3/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor", {
-            theme: "ace/theme/tomorrow_night_eighties",
+            theme: "ace/theme/xcode",
             mode: "ace/mode/matlab",
             autoScrollEditorIntoView: true,
             maxLines: 360,
             minLines: 16
         });
-        editor.setValue('disp("Welcome use octave-pipe");\nver\n');
+        editor.setValue('% Define matrix\nmat = [5 6 0 0 0; 1 5 6 0 0; 0 1 5 6 0; 0 0 1 5 6; 0 0 0 1 5];\n% Define row vector\nb = [1 0 0 0 1]\';\n% For loop\nfor i = 1:5\n    mat1 = mat;\n    mat1(:, i) = b;\n    % Query determinant\n    det(mat1)\nend');
         var editorObject = document.getElementById('editor');
         editorObject.style.fontSize = '16px';
         editorObject.style.fontFamily = 'Fira Code, monospace, Consolas ,Monospaced';
         window.savedEditor = editor;
     </script>
+    <hr />
+    <div class="text" style="text-align:center; color: darkgray;">
+        <a href="https://github.com/Phosphorus15/octave-pipe">Octave Pipe</a><br />
+        Powered By GNU Octave
+    </div>
 </body>
 
 </html>
