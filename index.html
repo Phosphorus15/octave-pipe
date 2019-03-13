@@ -14,6 +14,7 @@
 
         function doRun(button) {
             button.disabled = "true";
+            document.getElementById('panel-body-content').innerText = '';
             $.ajax({
                 url: "code.sub", timeout: 3000, contentType: "text/plain", dataType: "text", type: "POST", data: window.savedEditor.getValue(), success: function (resp) {
                     var resultObject = document.getElementById('result-panel');
@@ -38,6 +39,12 @@
                     Octave-Pipe
                 </a>
             </div>
+            <a href="https://github.com/Phosphorus15/octave-pipe">
+            <p style="font-family: Fira Code, monospace, Consolas ,Monospaced" class="navbar-text navbar-right">View on
+                GitHub
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"> </span>
+            </p>
+            </a>
         </div>
     </nav>
     <div id="editor"></div>

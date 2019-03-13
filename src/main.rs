@@ -92,12 +92,12 @@ fn handle(stream: TcpStream) -> Result<(), std::string::FromUtf8Error> {
                 handle_submit(stream, request).expect(&format!("response failed {:?}", addr));
             },
             _ => {
-                stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n".as_bytes()).expect(&format!("http write failed {:?}", addr));
+                stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nServer: GNU-Octave\r\n\r\n".as_bytes()).expect(&format!("http write failed {:?}", addr));
                 stream.write(grap_primary_page().as_bytes()).expect(&format!("http write failed {:?}", addr));
             }
         }
     } else {
-        eprintln!("server error occurred - connection close {:?}", addr);
+        eprintln!("connection closed {:?}", addr);
     }
     Ok(())
 }

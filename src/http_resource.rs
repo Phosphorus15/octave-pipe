@@ -28,7 +28,7 @@ fn handle_submit(stream: TcpStream, request: HttpRequest)  -> Result<(), std::st
             let content = String::from_utf8(buffer.0)?;
             let (out, err) = submit_octave(content);
             let send = out + err.as_str();
-            stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".as_bytes()).expect("http write failed");
+            stream.write("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nServer: GNU-Octave\r\n".as_bytes()).expect("http write failed");
             stream.write(format!("Content-Length: {}\r\n\r\n", send.len()).as_bytes()).expect("http write failed");
             stream.write(send.as_bytes()).expect("http write failed");
         },
